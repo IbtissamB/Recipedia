@@ -4,6 +4,8 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Recipe
 from .serializers import RecipeSerializer
+# Import the custom permission
+from .permissions import IsAuthorOrReadOnly
 
 # ListCreateAPIView: Handles GET (list all) and POST (create new).
 class RecipeList(generics.ListCreateAPIView):
@@ -27,4 +29,4 @@ class RecipeList(generics.ListCreateAPIView):
 class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
