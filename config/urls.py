@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls), #maybe admin.site.register. check later
+    path('admin/', admin.site.urls),
     path('api/', include('recipes.urls')), # This adds your recipe endpoints
+    path('api/users/', include('users.urls')), # Link the new users app
 ]
