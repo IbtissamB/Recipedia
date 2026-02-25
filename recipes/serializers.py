@@ -34,3 +34,13 @@ class RecipeSerializer(serializers.ModelSerializer):
         #'read_only_fields' means the USER cannot change these manually.
         #the 'author' is handled in the view, and 'id' is automatic.
         read_only_fields = ['author'] # The API will set the author automatically later
+    
+    # We add this specific 'validate' function for ingredients
+    def validate_ingredients(self, value):
+        """
+        Check that the recipe has at least one ingredient.
+        'value' is the list of ingredients being sent to us.
+        """
+        if len(value) == 0:
+            raise serializers.ValidationError("A recipe must have at least one ingredient.")
+        return value
