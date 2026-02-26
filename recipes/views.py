@@ -6,6 +6,9 @@ from .models import Recipe
 from .serializers import RecipeSerializer
 # Import the custom permission
 from .permissions import IsAuthorOrReadOnly
+# Add CategoryList and CategoryDetail to your imports
+from .models import Recipe, Category, Ingredient
+from .serializers import RecipeSerializer, CategorySerializer, IngredientSerializer
 
 # ListCreateAPIView: Handles GET (list all) and POST (create new).
 class RecipeList(generics.ListCreateAPIView):
@@ -30,3 +33,23 @@ class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+
+class CategoryList(generics.ListCreateAPIView):
+    """
+    Allows users to see all available categories (GET) 
+    and admins to create new ones (POST).
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    # Anyone can see the list, but only logged-in users (or admins) 
+    # should be able to create categories.
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Allows users to see a single category by ID.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
