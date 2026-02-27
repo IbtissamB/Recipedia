@@ -16,15 +16,32 @@ class RecipeList(generics.ListCreateAPIView):
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly] # 'IsAuthenticatedOrReadOnly' means Anyone can SEE recipes, but you must LOGIN to create one.
 
-    # These power the Search and Filter features for the LIST
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category', 'ingredients']
-    search_fields = ['title', 'ingredients__name']
-    ordering_fields = ['prep_time', 'cook_time', 'servings']
+    filter_backends = [
+        DjangoFilterBackend, 
+        filters.SearchFilter, 
+        filters.OrderingFilter
+    ]
 
+    # ---Search Feature ---
+    # These allow users to use the ?search= keyword
+    # added 'category__name' so we can search "Dessert" as a word.
+    search_fields = ['title', 'category__name', 'ingredients__name', 'prep_time']
+
+    ordering_fields = ['prep_time', 'cook_time', 'servings', 'created_at']
+
+    # --- Optional Filters ---
+    # These allow users to refine results (e.g., ?servings=4&cook_time=20)
+    filterset_fields = {
+        'category': ['exact'],
+        'ingredients': ['exact'],
+        'prep_time': ['exact', 'lte', 'gte'], # 'lte' means "less than or equal to"
+        'cook_time': ['exact', 'lte', 'gte'],
+        'servings': ['exact'],
+    }
+
+    # This function runs right before a new recipe is saved.
+    # This automatically sets the 'author' to the logged-in user
     def perform_create(self, serializer):
-        # This function runs right before a new recipe is saved.
-        # This automatically sets the 'author' to the logged-in user
         serializer.save(author=self.request.user)
 
 # VIEW 2: Retrieve, Update, Delete a single recipe by ID
@@ -46,10 +63,8 @@ class CategoryList(generics.ListCreateAPIView):
     # should be able to create categories.
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+#Allows users to see a single category by ID.
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Allows users to see a single category by ID.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
