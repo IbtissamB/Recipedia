@@ -32,9 +32,12 @@ class RecipeList(generics.ListCreateAPIView):
     # --- Optional Filters ---
     # These allow users to refine results (e.g., ?servings=4&cook_time=20)
     filterset_fields = {
-        'category': ['exact'],
-        'ingredients': ['exact'],
-        'prep_time': ['exact', 'lte', 'gte'], # 'lte' means "less than or equal to"
+        # This allows: ?category__name=Dessert
+        'category__name': ['icontains', 'exact'], 
+        # This allows: ?ingredients__name=chicken
+        'ingredients__name': ['icontains', 'exact'],
+        # These allow: ?prep_time__lte=30
+        'prep_time': ['exact', 'lte', 'gte'],
         'cook_time': ['exact', 'lte', 'gte'],
         'servings': ['exact'],
     }
