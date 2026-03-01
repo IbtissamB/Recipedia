@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'rest_framework',
-
+    'django_filters',  # <--- MAKE SURE THIS IS HERE!
+    
     # Your apps
     'recipes',
     'users',
