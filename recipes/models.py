@@ -27,5 +27,9 @@ class Recipe(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     ingredients = models.ManyToManyField(Ingredient)
 
+    class Meta:
+        # This tells Django to always sort by the newest recipe first
+        ordering = ['-created_at']
+        
     def __str__(self):
         return self.title
