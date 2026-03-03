@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -42,7 +43,8 @@ INSTALLED_APPS = [
     # Third-party apps
     'rest_framework',
     'django_filters',  # <--- MAKE SURE THIS IS HERE!
-    
+    'rest_framework_simplejwt',
+
     # Your apps
     'recipes',
     'users',
@@ -115,10 +117,21 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication', # Keep this for the browsable API
+    ),
     # This ensures we don't send too much data at once. 
     # It will show 10 recipes per page.
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+}
+
+# Optional: Customize token lifespan
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 # Internationalization
