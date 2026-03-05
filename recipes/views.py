@@ -71,3 +71,16 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+# VIEW: List all ingredients (GET) or Create a new one (POST)
+class IngredientList(generics.ListCreateAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    # Allow anyone to see, but must be logged in to add a new ingredient
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+# VIEW: Get, Update, or Delete a specific ingredient by ID
+class IngredientDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

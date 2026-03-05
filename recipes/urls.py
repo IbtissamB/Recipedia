@@ -1,7 +1,7 @@
 #The "GPS" that tells Django which View to run based on the URL.
 
 from django.urls import path
-from .views import RecipeList, RecipeDetail, CategoryList, CategoryDetail
+from .views import RecipeList, RecipeDetail, CategoryList, CategoryDetail, IngredientDetail, IngredientList
 
 urlpatterns = [
     # Recipe Endpoints
@@ -14,4 +14,8 @@ urlpatterns = [
     # Category Endpoints
     path('categories/', CategoryList.as_view(), name='category-list'),
     path('categories/<int:pk>/', CategoryDetail.as_view(), name='category-detail'),
+
+    # Ingredient Endpoints
+    path('api/ingredients/', IngredientList.as_view(), name='ingredient-list'),
+    path('api/ingredients/<int:pk>/', IngredientDetail.as_view(), name='ingredient-detail'),
 ]
