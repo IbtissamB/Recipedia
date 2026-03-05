@@ -16,6 +16,6 @@ urlpatterns = [
     path('categories/<int:pk>/', CategoryDetail.as_view(), name='category-detail'),
 
     # Ingredient Endpoints
-    path('api/ingredients/', IngredientList.as_view(), name='ingredient-list'),
-    path('api/ingredients/<int:pk>/', IngredientDetail.as_view(), name='ingredient-detail'),
+    path('ingredients/', IngredientList.as_view(), name='ingredient-list'),
+    path('ingredients/<int:pk>/', IngredientDetail.as_view(), name='ingredient-detail'),
 ]
