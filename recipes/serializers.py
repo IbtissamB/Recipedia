@@ -19,8 +19,10 @@ class IngredientSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     # These show the names of the category/author instead of just their ID numbers
     category_name = serializers.ReadOnlyField(source='category.name')
-    ingredient_name = serializers.ReadOnlyField(source='ingredient.name')
     author_username = serializers.ReadOnlyField(source='author.username')
+
+    # This nests the full ingredient objects (id + name)
+    ingredient_details = IngredientSerializer(source='ingredients', many=True, read_only=True)
 
     class Meta:
         model = Recipe
