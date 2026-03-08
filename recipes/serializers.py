@@ -32,7 +32,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'instructions', 
             'prep_time', 'cook_time', 'servings', 
             'created_at', 'author', 'author_username', 
-            'category', 'category_name', 'ingredients', 'ingredient_name'
+            'category', 'category_name', 'ingredients', 'ingredient_details'
         ]
         #'read_only_fields' means the USER cannot change these manually.
         #the 'author' is handled in the view, and 'id' is automatic.
