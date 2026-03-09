@@ -163,7 +163,7 @@ class Ingredient(models.Model):
 | POST   | `/api/users/login/`          | Exchange credentials for Access & Refresh tokens | Public  |
 | POST   | `/api/users/login/refresh/`  | Use Refresh token to get a new Access token     | Public  |
 
-## Recipes Endpoints
+### Recipes Endpoints
 
 | Method | Endpoint             | Description                                      | Access       |
 |--------|----------------------|--------------------------------------------------|--------------|
@@ -173,7 +173,7 @@ class Ingredient(models.Model):
 | PUT/PATCH | `/api/recipes/<id>/` | Update an existing recipe                     | Author Only  |
 | DELETE | `/api/recipes/<id>/` | Remove a recipe from the database                | Author Only  |       |
 
-## Categories Endpoints
+### Categories Endpoints
 
 | Method | Endpoint                        | Description                          | Access        |
 |--------|---------------------------------|--------------------------------------|---------------|
@@ -182,7 +182,7 @@ class Ingredient(models.Model):
 | GET    | `/api/recipes/categories/<id>/` | View a specific category's details   | Public        |
 | DELETE | `/api/recipes/categories/<id>/` | Delete a category                    | Admin/Author  |
 
-## User Management Endpoints
+### User Management Endpoints
 
 | Method | Endpoint              | Description                          | Access        |
 |--------|-----------------------|--------------------------------------|---------------|
@@ -254,19 +254,19 @@ Standard HTTP status codes and what they mean for your project.
 
 If you encounter issues while testing the API, check these common solutions:
 
-### 1. Token Errors (`401 Unauthorized` / `token_not_valid`)
+ **1. Token Errors (`401 Unauthorized` / `token_not_valid`)**
 * **Problem:** Your access token has expired (default is 5 minutes).
 * **Fix:** Use the `/api/users/login/refresh/` endpoint to get a new access token using your refresh token, or simply log in again.
 * **Note:** Ensure the header in Postman is set to `Authorization: Bearer <your_token>`.
 
-### 2. Permission Denied (`403 Forbidden`)
+ **2. Permission Denied (`403 Forbidden`)**
 * **Problem:** You are trying to Edit (`PUT/PATCH`) or Delete a recipe you didn't create.
 * **Fix:** Check the `author` field of the recipe. You must be logged in as that specific user to modify it.
 
-### 3. Database Errors (`no such table`)
+ **3. Database Errors (`no such table`)**
 * **Problem:** You've added new features (like Categories) but the database hasn't updated.
 * **Fix:** Run `python manage.py makemigrations` and `python manage.py migrate` in your terminal.
 
-### 4. Slash Issues (`404 Not Found`)
+ **4. Slash Issues (`404 Not Found`)**
 * **Problem:** Django is strict about trailing slashes.
 * **Fix:** Ensure your URL ends with a `/`. (e.g., use `/api/recipes/` instead of `/api/recipes`).
