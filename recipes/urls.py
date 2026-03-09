@@ -6,7 +6,7 @@ from .views import RecipeList, RecipeDetail, CategoryList, CategoryDetail, Ingre
 urlpatterns = [
     # Recipe Endpoints
     # Path: /api/recipes/
-    path('list/', RecipeList.as_view(), name='recipe-list'),
+    path('', RecipeList.as_view(), name='recipe-list'),
     
     # Path: /api/recipes/1/ (The <int:pk> captures the ID of the recipe)
     path('<int:pk>/', RecipeDetail.as_view(), name='recipe-detail'),
