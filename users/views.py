@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegisterView(generics.CreateAPIView):
     # This view only allows POST requests to create a new user
@@ -19,3 +20,6 @@ class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     # You might want to restrict this so only admins can see all users
     permission_classes = [permissions.IsAdminUser]
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
