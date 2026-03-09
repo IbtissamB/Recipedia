@@ -16,18 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('recipes.urls')), # This adds your recipe endpoints
+    path('api/recipes/', include('recipes.urls')), # This adds your recipe endpoints
     path('api/users/', include('users.urls')), # Link the new users app
-    # Path to login and get the token
-    path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    
-    # Path to get a new access token using the refresh token
-    path('api/login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
